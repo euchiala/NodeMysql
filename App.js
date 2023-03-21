@@ -12,6 +12,7 @@ app.get('/', (req,res) => {
 })
 
 require('./app/routes/Personnel.routes')(app);
+require('./app/routes/Tache.routes')(app);
 
 app.listen(1338, () => {
     console.log('esthetique server is running on port 1338')

@@ -1,27 +1,27 @@
-const client = require('../models/Client.model');
+const planning = require('../models/planning.model');
 
 exports.create = (req, res) => {
-    const object = new client(req.body);
+    const object = new planning(req.body);
 
-    client.create(object, (err, data) => {
+    planning.create(object, (err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.getAll = (req, res) => {
-    client.getAll((err, data) => {
+    planning.getAll((err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.findOne = (req, res) => {
     const {id} = req.params;
-    client.findByID(id, (err, data) => {
+    planning.findByID(id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `client with id ${id} NOT FOUND`});
+                res.status(404).send({message: `planning with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error getting client with id ${id}`});
+                res.status(500).send({message: `Error getting planning with id ${id}`});
             }
         } else {
             res.status(200).send(data);
@@ -30,15 +30,15 @@ exports.findOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    client.updateByID(
+    planning.update(
         req.params.id,
-        new client(req.body),
+        new planning(req.body),
         (err, data) => {
             if (err) {
                 if (err.type === 'not_found') {
-                    res.status(404).send({message: `client with id ${req.params.id} NOT FOUND`});
+                    res.status(404).send({message: `planning with id ${req.params.id} NOT FOUND`});
                 } else {
-                    res.status(500).send({message: `Error updating client with id ${req.params.id}`, err});
+                    res.status(500).send({message: `Error updating planning with id ${req.params.id}`, err});
                 }
             } else {
                 res.status(200).send(data);
@@ -48,12 +48,12 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    client.delete(req.params.id, (err, data) => {
+    planning.delete(req.params.id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `client with id ${id} NOT FOUND`});
+                res.status(404).send({message: `planning with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error deleting client with id ${id}`});
+                res.status(500).send({message: `Error deleting planning with id ${id}`});
             }
         } else {
             res.status(200).send(data);

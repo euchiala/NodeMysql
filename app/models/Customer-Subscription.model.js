@@ -1,11 +1,13 @@
 const sql = require('./db');
-const tableName = 'Client';
-const client = function (object) {
-    this.nom = object.nom;
-    this.num_tel = object.num_tel
+const tableName = 'customer_subscription';
+const customer_subscription = function (object) {
+    this.customerId  = object.customerId ;
+    this.subscriptionId = object.subscriptionId;
+    this.startDate = object.startDate;
+    this.endDate = object.endDate;
 }
 
-client.create = (newObject, result) => {
+customer_subscription.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -14,7 +16,7 @@ client.create = (newObject, result) => {
     });
 };
 
-client.findByID = (id, result) => {
+customer_subscription.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -23,7 +25,7 @@ client.findByID = (id, result) => {
     });
 };
 
-client.getAll = result => {
+customer_subscription.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -32,15 +34,17 @@ client.getAll = result => {
     });
 };
 
-client.updateByID = (id, object, result) => {
+customer_subscription.updateByID = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            nom = ?,
-            num_tel = ?
+            customerId  = ?,
+            subscriptionId = ?,
+            startDate = ?,
+            endDate = ?
             WHERE id = '${id}'
         `,
-        [object.nom ,object.num_tel],
+        [object.customerId , object.subscriptionId, object.startDate, object.endDate],
         (err, res) => {
             if(err)
             {
@@ -58,7 +62,7 @@ client.updateByID = (id, object, result) => {
 };
 
 
-client.delete = (id, result) => {
+customer_subscription.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -75,4 +79,4 @@ client.delete = (id, result) => {
 }
 
 
-module.exports = client;
+module.exports = customer_subscription;

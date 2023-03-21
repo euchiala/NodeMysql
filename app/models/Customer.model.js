@@ -1,14 +1,11 @@
 const sql = require('./db');
-const tableName = 'personnel';
-const personnel = function (object) {
-    this.nom = object.nom;
-    this.date_naiss = object.date_naiss;
-    this.num_tel = object.num_tel;
-    this.adresse = object.adresse;
-    this.cin = object.cin;
+const tableName = 'customer';
+const customer = function (object) {
+    this.name = object.name;
+    this.phone_number = object.phone_number
 }
 
-personnel.create = (newObject, result) => {
+customer.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -17,7 +14,7 @@ personnel.create = (newObject, result) => {
     });
 };
 
-personnel.findByID = (id, result) => {
+customer.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -26,7 +23,7 @@ personnel.findByID = (id, result) => {
     });
 };
 
-personnel.getAll = result => {
+customer.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -35,18 +32,15 @@ personnel.getAll = result => {
     });
 };
 
-personnel.updateByID = (id, object, result) => {
+customer.update = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            nom = ?,
-            date_naiss = ?,
-            num_tel = ?,
-            adresse = ?,
-            cin = ?
+            name = ?,
+            phone_number = ?
             WHERE id = '${id}'
         `,
-        [object.nom ,object.date_naiss ,object.num_tel ,object.adresse ,object.cin],
+        [object.name ,object.phone_number],
         (err, res) => {
             if(err)
             {
@@ -64,7 +58,7 @@ personnel.updateByID = (id, object, result) => {
 };
 
 
-personnel.delete = (id, result) => {
+customer.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -81,4 +75,4 @@ personnel.delete = (id, result) => {
 }
 
 
-module.exports = personnel;
+module.exports = customer;

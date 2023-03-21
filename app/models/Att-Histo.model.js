@@ -1,11 +1,12 @@
 const sql = require('./db');
-const tableName = 'tache_personnel';
-const tache_personnel = function (object) {
-    this.id_personnel  = object.id_personnel ;
-    this.id_tache = object.id_tache;
+const tableName = 'att_histo';
+const att_histo = function (object) {
+    this.coachId = object.coachId;
+    this.customerId = object.customerId;
+    this.attTime = object.attTime;
 }
 
-tache_personnel.create = (newObject, result) => {
+att_histo.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -14,7 +15,7 @@ tache_personnel.create = (newObject, result) => {
     });
 };
 
-tache_personnel.findByID = (id, result) => {
+att_histo.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -23,7 +24,7 @@ tache_personnel.findByID = (id, result) => {
     });
 };
 
-tache_personnel.getAll = result => {
+att_histo.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -32,15 +33,16 @@ tache_personnel.getAll = result => {
     });
 };
 
-tache_personnel.updateByID = (id, object, result) => {
+att_histo.update = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            id_personnel  = ?,
-            id_tache= ?
+            coachId  = ?,
+            customerId= ?,
+            attTime= ?
             WHERE id = '${id}'
         `,
-        [object.id_personnel , object.etat, object.id_tache],
+        [object.coachId , object.customerId, object.attTime],
         (err, res) => {
             if(err)
             {
@@ -58,7 +60,7 @@ tache_personnel.updateByID = (id, object, result) => {
 };
 
 
-tache_personnel.delete = (id, result) => {
+att_histo.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -75,4 +77,4 @@ tache_personnel.delete = (id, result) => {
 }
 
 
-module.exports = tache_personnel;
+module.exports = att_histo;

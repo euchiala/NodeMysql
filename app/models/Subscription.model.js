@@ -1,11 +1,14 @@
 const sql = require('./db');
-const tableName = 'tache_rdv';
-const tache_rdv = function (object) {
-    this.id_rdv  = object.id_rdv ;
-    this.id_tache = object.id_tache;
+const tableName = 'subscription';
+const subscription = function (object) {
+    this.type = object.type;
+    this.price = object.price;
+    this.number_of_sessions = object.number_of_sessions;
+    this.description = object.description;
+    this.duration = object.duration;
 }
 
-tache_rdv.create = (newObject, result) => {
+subscription.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -14,7 +17,7 @@ tache_rdv.create = (newObject, result) => {
     });
 };
 
-tache_rdv.findByID = (id, result) => {
+subscription.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -23,7 +26,7 @@ tache_rdv.findByID = (id, result) => {
     });
 };
 
-tache_rdv.getAll = result => {
+subscription.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -32,15 +35,18 @@ tache_rdv.getAll = result => {
     });
 };
 
-tache_rdv.updateByID = (id, object, result) => {
+subscription.update = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            id_rdv  = ?,
-            id_tache= ?
+            type =?,
+            price =?,
+            number_of_sessions =?,
+            description =?,
+            duration =?
             WHERE id = '${id}'
         `,
-        [object.id_rdv , object.etat, object.id_tache],
+        [object.type ,object.price ,object.number_of_sessions ,object.description ,object.duration],
         (err, res) => {
             if(err)
             {
@@ -58,7 +64,7 @@ tache_rdv.updateByID = (id, object, result) => {
 };
 
 
-tache_rdv.delete = (id, result) => {
+subscription.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -75,4 +81,4 @@ tache_rdv.delete = (id, result) => {
 }
 
 
-module.exports = tache_rdv;
+module.exports = subscription;

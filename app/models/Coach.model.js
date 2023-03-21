@@ -1,11 +1,16 @@
 const sql = require('./db');
-const tableName = 'tache';
-const tache = function (object) {
-    this.nom = object.nom;
-    this.prix = object.prix;
+const tableName = 'coach';
+const coach = function (object) {
+    this.name = object.name;
+    this.birth_date = object.birth_date;
+    this.phone_number = object.phone_number;
+    this.adress = object.adress;
+    this.cin = object.cin;
+    this.speciality = object.speciality;
+    this.color = object.color;
 }
 
-tache.create = (newObject, result) => {
+coach.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -14,7 +19,7 @@ tache.create = (newObject, result) => {
     });
 };
 
-tache.findByID = (id, result) => {
+coach.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -23,7 +28,7 @@ tache.findByID = (id, result) => {
     });
 };
 
-tache.getAll = result => {
+coach.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -32,15 +37,20 @@ tache.getAll = result => {
     });
 };
 
-tache.updateByID = (id, object, result) => {
+coach.update = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            nom = ?,
-            prix = ?
+            name = ?,
+            birth_date = ?,
+            phone_number = ?,
+            adress = ?,
+            cin = ?,
+            speciality = ?,
+            color = ?
             WHERE id = '${id}'
         `,
-        [object.nom ,object.prix],
+        [object.name ,object.birth_date ,object.phone_number ,object.adress ,object.cin ,object.speciality ,object.color],
         (err, res) => {
             if(err)
             {
@@ -58,7 +68,7 @@ tache.updateByID = (id, object, result) => {
 };
 
 
-tache.delete = (id, result) => {
+coach.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -75,4 +85,4 @@ tache.delete = (id, result) => {
 }
 
 
-module.exports = tache;
+module.exports = coach;

@@ -1,11 +1,12 @@
 const sql = require('./db');
-const tableName = 'tache_facture';
-const tache_facture = function (object) {
-    this.id_facture  = object.id_facture ;
-    this.id_tache = object.id_tache;
+const tableName = 'planning';
+const planning = function (object) {
+    this.coachId = object.coachId;
+    this.name = object.name;
+    this.date = object.date;
 }
 
-tache_facture.create = (newObject, result) => {
+planning.create = (newObject, result) => {
     sql.query(`INSERT INTO ${tableName} SET ?`, newObject, (err, res) => {
         if(err)
             result(err, null);
@@ -14,7 +15,7 @@ tache_facture.create = (newObject, result) => {
     });
 };
 
-tache_facture.findByID = (id, result) => {
+planning.findByID = (id, result) => {
     sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
@@ -23,7 +24,7 @@ tache_facture.findByID = (id, result) => {
     });
 };
 
-tache_facture.getAll = result => {
+planning.getAll = result => {
     sql.query(`SELECT * FROM ${tableName}`, (err, res) => {
         if(err)
             result(err, null);
@@ -32,15 +33,16 @@ tache_facture.getAll = result => {
     });
 };
 
-tache_facture.updateByID = (id, object, result) => {
+planning.update = (id, object, result) => {
     sql.query(
         `
             UPDATE ${tableName} SET 
-            id_facture  = ?,
-            id_tache= ?
+            coachId = ?,
+            name = ?,
+            date = ?
             WHERE id = '${id}'
         `,
-        [object.id_facture , object.etat, object.id_tache],
+        [object.coachId ,object.name, object.date],
         (err, res) => {
             if(err)
             {
@@ -58,7 +60,7 @@ tache_facture.updateByID = (id, object, result) => {
 };
 
 
-tache_facture.delete = (id, result) => {
+planning.delete = (id, result) => {
     sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
@@ -75,4 +77,4 @@ tache_facture.delete = (id, result) => {
 }
 
 
-module.exports = tache_facture;
+module.exports = planning;

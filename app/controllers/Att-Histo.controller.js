@@ -1,27 +1,27 @@
-const tache_rdv = require('../models/Tache-Rdv.model');
+const att_histo = require('../models/Tache-Facture.model');
 
 exports.create = (req, res) => {
-    const object = new tache_rdv(req.body);
+    const object = new att_histo(req.body);
 
-    tache_rdv.create(object, (err, data) => {
+    att_histo.create(object, (err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.getAll = (req, res) => {
-    tache_rdv.getAll((err, data) => {
+    att_histo.getAll((err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.findOne = (req, res) => {
     const {id} = req.params;
-    tache_rdv.findByID(id, (err, data) => {
+    att_histo.findByID(id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `tache_rdv with id ${id} NOT FOUND`});
+                res.status(404).send({message: `att_histo with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error getting tache_rdv with id ${id}`});
+                res.status(500).send({message: `Error getting att_histo with id ${id}`});
             }
         } else {
             res.status(200).send(data);
@@ -30,15 +30,15 @@ exports.findOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    tache_rdv.updateByID(
+    att_histo.updateByID(
         req.params.id,
-        new tache_rdv(req.body),
+        new att_histo(req.body),
         (err, data) => {
             if (err) {
                 if (err.type === 'not_found') {
-                    res.status(404).send({message: `tache_rdv with id ${req.params.id} NOT FOUND`});
+                    res.status(404).send({message: `att_histo with id ${req.params.id} NOT FOUND`});
                 } else {
-                    res.status(500).send({message: `Error updating tache_rdv with id ${req.params.id}`, err});
+                    res.status(500).send({message: `Error updating att_histo with id ${req.params.id}`, err});
                 }
             } else {
                 res.status(200).send(data);
@@ -48,12 +48,12 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    tache_rdv.delete(req.params.id, (err, data) => {
+    att_histo.delete(req.params.id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `tache_rdv with id ${id} NOT FOUND`});
+                res.status(404).send({message: `att_histo with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error deleting tache_rdv with id ${id}`});
+                res.status(500).send({message: `Error deleting att_histo with id ${id}`});
             }
         } else {
             res.status(200).send(data);

@@ -1,27 +1,27 @@
-const personnel = require('../models/Personnel.model');
+const customer = require('../models/customer.model');
 
 exports.create = (req, res) => {
-    const object = new personnel(req.body);
+    const object = new customer(req.body);
 
-    personnel.create(object, (err, data) => {
+    customer.create(object, (err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.getAll = (req, res) => {
-    personnel.getAll((err, data) => {
+    customer.getAll((err, data) => {
         res.status(err ? 500 : 201).send(err ? err : data);
     })
 };
 
 exports.findOne = (req, res) => {
     const {id} = req.params;
-    personnel.findByID(id, (err, data) => {
+    customer.findByID(id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `personnel with id ${id} NOT FOUND`});
+                res.status(404).send({message: `customer with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error getting personnel with id ${id}`});
+                res.status(500).send({message: `Error getting customer with id ${id}`});
             }
         } else {
             res.status(200).send(data);
@@ -30,15 +30,15 @@ exports.findOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    personnel.updateByID(
+    customer.update(
         req.params.id,
-        new personnel(req.body),
+        new customer(req.body),
         (err, data) => {
             if (err) {
                 if (err.type === 'not_found') {
-                    res.status(404).send({message: `personnel with id ${req.params.id} NOT FOUND`});
+                    res.status(404).send({message: `customer with id ${req.params.id} NOT FOUND`});
                 } else {
-                    res.status(500).send({message: `Error updating personnel with id ${req.params.id}`, err});
+                    res.status(500).send({message: `Error updating customer with id ${req.params.id}`, err});
                 }
             } else {
                 res.status(200).send(data);
@@ -48,12 +48,12 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    personnel.delete(req.params.id, (err, data) => {
+    customer.delete(req.params.id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `personnel with id ${id} NOT FOUND`});
+                res.status(404).send({message: `customer with id ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error deleting personnel with id ${id}`});
+                res.status(500).send({message: `Error deleting customer with id ${id}`});
             }
         } else {
             res.status(200).send(data);

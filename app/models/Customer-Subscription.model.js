@@ -17,11 +17,11 @@ customer_subscription.create = (newObject, result) => {
 };
 
 customer_subscription.findByID = (id, result) => {
-    sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
+    sql.query(`SELECT * FROM ${tableName} WHERE customerId = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
         else
-            result(null, res[0]);
+            result(null, res);
     });
 };
 
@@ -63,7 +63,7 @@ customer_subscription.updateByID = (id, object, result) => {
 
 
 customer_subscription.delete = (id, result) => {
-    sql.query(`DELETE FROM ${tableName} WHERE id = ?`, id,  (err, res) => {
+    sql.query(`DELETE FROM ${tableName} WHERE customerId = ?`, id,  (err, res) => {
         if (err) {
             result(null, err);
             return;

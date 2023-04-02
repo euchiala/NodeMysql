@@ -1,4 +1,4 @@
-const att_histo = require('../models/Tache-Facture.model');
+const att_histo = require('../models/Att-Histo.model');
 
 exports.create = (req, res) => {
     const object = new att_histo(req.body);
@@ -14,14 +14,28 @@ exports.getAll = (req, res) => {
     })
 };
 
-exports.findOne = (req, res) => {
+exports.findByCoach = (req, res) => {
     const {id} = req.params;
-    att_histo.findByID(id, (err, data) => {
+    att_histo.findByCoachId(id, (err, data) => {
         if (err) {
             if (err.type === 'not_found') {
-                res.status(404).send({message: `att_histo with id ${id} NOT FOUND`});
+                res.status(404).send({message: `att_histo with Coachid ${id} NOT FOUND`});
             } else {
-                res.status(500).send({message: `Error getting att_histo with id ${id}`});
+                res.status(500).send({message: `Error getting att_histo with Coachid ${id}`});
+            }
+        } else {
+            res.status(200).send(data);
+        }
+    })
+}
+exports.findByCustomer = (req, res) => {
+    const {id} = req.params;
+    att_histo.findByCustomerId(id, (err, data) => {
+        if (err) {
+            if (err.type === 'not_found') {
+                res.status(404).send({message: `att_histo with CustomerId ${id} NOT FOUND`});
+            } else {
+                res.status(500).send({message: `Error getting att_histo with CustomerId ${id}`});
             }
         } else {
             res.status(200).send(data);

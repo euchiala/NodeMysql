@@ -1,4 +1,4 @@
-const customer_subscription = require('../models/Tache-Personnel.model');
+const customer_subscription = require('../models/Customer-Subscription.model');
 
 exports.create = (req, res) => {
     const object = new customer_subscription(req.body);

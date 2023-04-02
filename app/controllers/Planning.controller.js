@@ -1,4 +1,4 @@
-const planning = require('../models/planning.model');
+const planning = require('../models/Planning.model');
 
 exports.create = (req, res) => {
     const object = new planning(req.body);

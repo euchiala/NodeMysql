@@ -2,8 +2,9 @@ const sql = require('./db');
 const tableName = 'planning';
 const planning = function (object) {
     this.coachId = object.coachId;
-    this.name = object.name;
-    this.date = object.date;
+    this.title = object.title;
+    this.start = object.start;
+    this.color = object.color;
 }
 
 planning.create = (newObject, result) => {
@@ -16,11 +17,11 @@ planning.create = (newObject, result) => {
 };
 
 planning.findByID = (id, result) => {
-    sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
+    sql.query(`SELECT * FROM ${tableName} WHERE coachId = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
         else
-            result(null, res[0]);
+            result(null, res);
     });
 };
 
@@ -38,11 +39,12 @@ planning.update = (id, object, result) => {
         `
             UPDATE ${tableName} SET 
             coachId = ?,
-            name = ?,
-            date = ?
-            WHERE id = '${id}'
+            title = ?,
+            start = ?
+            color = ?
+            WHERE coachId = '${id}'
         `,
-        [object.coachId ,object.name, object.date],
+        [object.coachId ,object.title, object.start, object.color],
         (err, res) => {
             if(err)
             {

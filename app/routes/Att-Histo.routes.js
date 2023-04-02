@@ -5,7 +5,9 @@ module.exports = app => {
 
     app.get('/att_histos', att_histo.getAll);
 
-    app.get('/att_histos/:id', att_histo.findOne);
+    app.get('/att_histos/coach/:id', att_histo.findByCoach);
+
+    app.get('/att_histos/customer/:id', att_histo.findByCustomer);
 
     app.put('/att_histos/:id', att_histo.update);
 

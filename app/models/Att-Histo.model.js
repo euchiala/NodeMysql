@@ -15,8 +15,17 @@ att_histo.create = (newObject, result) => {
     });
 };
 
-att_histo.findByID = (id, result) => {
-    sql.query(`SELECT * FROM ${tableName} WHERE id = '${id}'`, (err, res) => {
+att_histo.findByCoachId = (id, result) => {
+    sql.query(`SELECT * FROM ${tableName} WHERE coachId = '${id}'`, (err, res) => {
+        if(err)
+            result(err, null);
+        else
+            result(null, res[0]);
+    });
+};
+
+att_histo.findByCustomerId = (id, result) => {
+    sql.query(`SELECT * FROM ${tableName} WHERE customerId = '${id}'`, (err, res) => {
         if(err)
             result(err, null);
         else
